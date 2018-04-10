@@ -53,7 +53,7 @@ public class UsersUIFeatureTest {
         secondUser = userRepository.save(secondUser);
         Long secondUserId = secondUser.getId();
 
-        System.setProperty("selenide.browser", "Chrome");
+        System.setProperty("selenide.headless", "true");
 
         open("http://localhost:3000/admin");
 
