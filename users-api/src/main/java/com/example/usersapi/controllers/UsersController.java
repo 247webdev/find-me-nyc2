@@ -60,6 +60,8 @@ public class UsersController {
         userFromDb.setUserName(userRequest.getUserName());
         userFromDb.setFirstName(userRequest.getFirstName());
         userFromDb.setLastName(userRequest.getLastName());
+        userFromDb.setLastSearch(userRequest.getLastSearch());
+        userFromDb.setAdmin(userRequest.isAdmin());
 
         return userRepository.save(userFromDb);
     }

@@ -1,6 +1,7 @@
 package com.example.usersapi.repositories;
 
 import com.example.usersapi.models.User;
+import com.google.common.collect.Iterables;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,15 +32,19 @@ public class UserRepositoryTest {
         userRepository.deleteAll();
 
         User firstUser = new User(
-                "user_name",
-                "some first name",
-                "some last name"
+                "user1",
+                "First",
+                "User",
+                "first search",
+                false
         );
 
         User secondUser = new User(
-                "second_user",
-                "some other first name",
-                "some other last name"
+                "user2",
+                "Second",
+                "User",
+                "second search",
+                true
         );
 
         entityManager.persist(firstUser);
@@ -60,7 +65,7 @@ public class UserRepositoryTest {
         List<User> usersFromDb = userRepository.findAll();
         String secondUsersUserName = usersFromDb.get(1).getUserName();
 
-        assertThat(secondUsersUserName, is("second_user"));
+        assertThat(secondUsersUserName, is("user2"));
     }
 
     @Test
@@ -68,7 +73,7 @@ public class UserRepositoryTest {
         List<User> usersFromDb = userRepository.findAll();
         String secondUsersFirstName = usersFromDb.get(1).getFirstName();
 
-        assertThat(secondUsersFirstName, is("some other first name"));
+        assertThat(secondUsersFirstName, is("Second"));
     }
 
     @Test
@@ -76,7 +81,25 @@ public class UserRepositoryTest {
         List<User> usersFromDb = userRepository.findAll();
         String secondUsersLastName = usersFromDb.get(1).getLastName();
 
-        assertThat(secondUsersLastName, is("some other last name"));
+        assertThat(secondUsersLastName, is("User"));
+    }
+
+    @Test
+    public void findAll_returnsLastSearch() {
+        Iterable<User> usersFromDb = userRepository.findAll();
+
+        String secondUsersLastSearch = Iterables.get(usersFromDb, 1).getLastSearch();
+
+        assertThat(secondUsersLastSearch, is("second search"));
+    }
+
+    @Test
+    public void findAll_returnsIsAdmin() {
+        Iterable<User> usersFromDb = userRepository.findAll();
+
+        boolean secondUsersIsAdmin= Iterables.get(usersFromDb, 1).isAdmin();
+
+        assertThat(secondUsersIsAdmin, is(true));
     }
 
 }

@@ -22,9 +22,17 @@ public class User {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    public User(String userName, String firstName, String lastName) {
+    @Column(name = "LAST_SEARCH")
+    private String lastSearch;
+
+    @Column(name = "ISADMIN")
+    private boolean isAdmin;
+
+    public User(String userName, String firstName, String lastName, String lastSearch, boolean isAdmin) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.lastSearch = lastSearch;
+        this.isAdmin = isAdmin;
     }
 }

@@ -78,7 +78,7 @@ task allTests(type: Test) {
 }
 
 dockerCompose {
-    useComposeFiles = ['docker-compose.test.yml']
+    useComposeFiles = ['docker-compose.yml']
 }
 dockerCompose.isRequiredBy(test)
 dockerCompose.isRequiredBy(allTests)

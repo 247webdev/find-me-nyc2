@@ -40,26 +40,41 @@ public class UsersControllerTest {
     @MockBean
     private UserRepository mockUserRepository;
 
+    private User newUser;
     private User updatedSecondUser;
 
     @Before
     public void setUp() {
         User firstUser = new User(
-                "someone",
-                "Ima",
-                "Person"
+                "user1",
+                "First",
+                "User",
+                "first search",
+                false
         );
 
         User secondUser = new User(
-                "someone_else",
-                "Someone",
-                "Else"
+                "user2",
+                "Second",
+                "User",
+                "second search",
+                true
+        );
+
+        newUser = new User(
+                "new_user",
+                "New",
+                "User",
+                "new search",
+                false
         );
 
         updatedSecondUser = new User(
-                "new_username",
-                "new",
-                "name"
+                "updated_username",
+                "Updated",
+                "User",
+                "updated search",
+                true
         );
 
         List<User> mockUsers =
@@ -98,24 +113,40 @@ public class UsersControllerTest {
     public void findAllUsers_success_returnUserNameForEachUser() throws Exception {
 
         this.mockMvc
-                .perform(get("/"))
-                .andExpect(jsonPath("$[0].userName", is("someone")));
+                .perform(get("/users"))
+                .andExpect(jsonPath("$[0].userName", is("user1")));
     }
 
     @Test
     public void findAllUsers_success_returnFirstNameForEachUser() throws Exception {
 
         this.mockMvc
-                .perform(get("/"))
-                .andExpect(jsonPath("$[0].firstName", is("Ima")));
+                .perform(get("/users"))
+                .andExpect(jsonPath("$[0].firstName", is("First")));
     }
 
     @Test
     public void findAllUsers_success_returnLastNameForEachUser() throws Exception {
 
         this.mockMvc
-                .perform(get("/"))
-                .andExpect(jsonPath("$[0].lastName", is("Person")));
+                .perform(get("/users"))
+                .andExpect(jsonPath("$[0].lastName", is("User")));
+    }
+
+    @Test
+    public void findAllUsers_success_returnLastSearchForEachUser() throws Exception {
+
+        this.mockMvc
+                .perform(get("/users"))
+                .andExpect(jsonPath("$[0].lastSearch", is("first search")));
+    }
+
+    @Test
+    public void findAllUsers_success_returnIsAdminForEachUser() throws Exception {
+
+        this.mockMvc
+                .perform(get("/users"))
+                .andExpect(jsonPath("$[0].admin", is(false)));
     }
 
     @Test
@@ -130,24 +161,40 @@ public class UsersControllerTest {
     public void findUserById_success_returnUserName() throws Exception {
 
         this.mockMvc
-                .perform(get("/1"))
-                .andExpect(jsonPath("$.userName", is("someone")));
+                .perform(get("/users/1"))
+                .andExpect(jsonPath("$.userName", is("user1")));
     }
 
     @Test
     public void findUserById_success_returnFirstName() throws Exception {
 
         this.mockMvc
-                .perform(get("/1"))
-                .andExpect(jsonPath("$.firstName", is("Ima")));
+                .perform(get("/users/1"))
+                .andExpect(jsonPath("$.firstName", is("First")));
     }
 
     @Test
     public void findUserById_success_returnLastName() throws Exception {
 
         this.mockMvc
-                .perform(get("/1"))
-                .andExpect(jsonPath("$.lastName", is("Person")));
+                .perform(get("/users/1"))
+                .andExpect(jsonPath("$.lastName", is("User")));
+    }
+
+    @Test
+    public void findUserById_success_returnLastSearch() throws Exception {
+
+        this.mockMvc
+                .perform(get("/users/1"))
+                .andExpect(jsonPath("$.lastSearch", is("first search")));
+    }
+
+    @Test
+    public void findUserById_success_returnIsAdmin() throws Exception {
+
+        this.mockMvc
+                .perform(get("/users/1"))
+                .andExpect(jsonPath("$.admin", is(false)));
     }
 
     @Test
@@ -180,6 +227,78 @@ public class UsersControllerTest {
         this.mockMvc
                 .perform(delete("/4"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void createUser_success_returnsStatusOk() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        post("/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(newUser))
+                )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void createUser_success_returnsUserName() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        post("/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(newUser))
+                )
+                .andExpect(jsonPath("$.userName", is("new_user")));
+    }
+
+    @Test
+    public void createUser_success_returnsFirstName() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        post("/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(newUser))
+                )
+                .andExpect(jsonPath("$.firstName", is("New")));
+    }
+
+    @Test
+    public void createUser_success_returnsLastName() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        post("/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(newUser))
+                )
+                .andExpect(jsonPath("$.lastName", is("User")));
+    }
+
+    @Test
+    public void createUser_success_returnsLastSearch() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        post("/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(newUser))
+                )
+                .andExpect(jsonPath("$.lastSearch", is("new search")));
+    }
+
+    @Test
+    public void createUser_success_returnsIsAdmin() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        post("/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(newUser))
+                )
+                .andExpect(jsonPath("$.admin", is(false)));
     }
 
     @Test
@@ -228,6 +347,30 @@ public class UsersControllerTest {
                                 .content(jsonObjectMapper.writeValueAsString(updatedSecondUser))
                 )
                 .andExpect(jsonPath("$.lastName", is("name")));
+    }
+
+    @Test
+    public void updateUserById_success_returnsUpdatedLastSearch() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/users/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondUser))
+                )
+                .andExpect(jsonPath("$.lastSearch", is("updated search")));
+    }
+
+    @Test
+    public void updateUserById_success_returnsUpdatedIsAdmin() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/users/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondUser))
+                )
+                .andExpect(jsonPath("$.admin", is(true)));
     }
 
     @Test
