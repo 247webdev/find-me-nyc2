@@ -1,4 +1,4 @@
-package com.example.springbootmicroserviceswrapper;
+package com.example.findmenyc2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
