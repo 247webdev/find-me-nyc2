@@ -75,14 +75,14 @@ public class DemoApplicationTests {
                 .contentType(JSON)
                 .and().body(userNotYetInDb)
                 .when()
-                .post("http://localhost:8080/users")
+                .post("http://localhost:8081")
                 .then()
                 .statusCode(Matchers.is(200))
                 .and().body(Matchers.containsString("new_user"));
 
         // Test get all Users
         when()
-                .get("http://localhost:8080/users/")
+                .get("http://localhost:8081")
                 .then()
                 .statusCode(Matchers.is(200))
                 .and().body(Matchers.containsString("user1"))
@@ -91,7 +91,7 @@ public class DemoApplicationTests {
 
         // Test finding one user by ID
         when()
-                .get("http://localhost:8080/users/" + secondUser.getId())
+                .get("http://localhost:8081" + secondUser.getId())
                 .then()
                 .statusCode(Matchers.is(200))
                 .and().body(Matchers.containsString("Second"))
@@ -105,14 +105,14 @@ public class DemoApplicationTests {
                 .contentType(JSON)
                 .and().body(secondUser)
                 .when()
-                .patch("http://localhost:8080/users/" + secondUser.getId())
+                .patch("http://localhost:8081" + secondUser.getId())
                 .then()
                 .statusCode(Matchers.is(200))
                 .and().body(Matchers.containsString("changed_name"));
 
         // Test deleting a user
         when()
-                .delete("http://localhost:8080/users/" + secondUser.getId())
+                .delete("http://localhost:8081" + secondUser.getId())
                 .then()
                 .statusCode(Matchers.is(200));
 

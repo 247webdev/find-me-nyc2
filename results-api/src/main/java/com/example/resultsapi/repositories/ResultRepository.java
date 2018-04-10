@@ -1,4 +1,7 @@
 package com.example.resultsapi.repositories;
 
-public class ResultRepository {
+import com.example.resultsapi.models.Result;
+import org.springframework.data.repository.CrudRepository;
+
+public interface ResultRepository extends CrudRepository<Result, Long> {
 }

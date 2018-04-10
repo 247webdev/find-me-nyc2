@@ -62,13 +62,17 @@ task stopUIDevServer(type: Exec) {
     commandLine 'pm2', 'stop', 'ui-test'
 }
 
-task waitForAPIs(type: Exec) {
+task waitForUsersAPIs(type: Exec) {
     commandLine './wait-for-users-api.sh','http://localhost:8080/users'
+}
+
+task waitForResultsAPIs(type: Exec) {
+    commandLine './wait-for-results-api.sh','http://localhost:8080/results'
 }
 
 test {
     dependsOn cleanTest
-    dependsOn waitForAPIs
+//    dependsOn waitForAPIs
 
     testLogging {
         exceptionFormat "full"
@@ -83,11 +87,18 @@ task runUsersAPITests(type: Exec) {
     commandLine './gradlew', 'test'
 }
 
+task runResultsAPITests(type: Exec) {
+    workingDir './results-api'
+    commandLine './gradlew', 'test'
+}
+
 task allTests(type: Test) {
     dependsOn cleanTest
-    dependsOn waitForAPIs
+    dependsOn waitForUsersAPIs
+    dependsOn waitForResultsAPIs
 //    dependsOn startUIDevServer
     dependsOn runUsersAPITests
+    dependsOn runResultsAPITests
 
     testLogging {
         exceptionFormat "full"
