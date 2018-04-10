@@ -10,22 +10,20 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UsersController {
-
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/")
-    public List<User> findAllUsers() {
+    @GetMapping("/users")
+    public Iterable<User> findAllUsers() {
         return userRepository.findAll();
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/users/{userId}")
     public User findUserById(@PathVariable Long userId) throws NotFoundException {
-
         User foundUser = userRepository.findOne(userId);
 
         if (foundUser == null) {
@@ -35,20 +33,12 @@ public class UsersController {
         return foundUser;
     }
 
-    @PostMapping("/")
+    @PostMapping("/users")
     public User createNewUser(@RequestBody User newUser) {
-
         return userRepository.save(newUser);
     }
 
-    @DeleteMapping("/{userId}")
-    public HttpStatus deleteUserById(@PathVariable Long userId) throws EmptyResultDataAccessException {
-
-        userRepository.delete(userId);
-        return HttpStatus.OK;
-    }
-
-    @PatchMapping("/{userId}")
+    @PatchMapping("/users/{userId}")
     public User updateUserById(@PathVariable Long userId, @RequestBody User userRequest) throws NotFoundException {
 
         User userFromDb = userRepository.findOne(userId);
@@ -66,14 +56,20 @@ public class UsersController {
         return userRepository.save(userFromDb);
     }
 
-    // EXCEPTION HANDLERS
+    @DeleteMapping("/users/{userId}")
+    public HttpStatus deleteUserById(@PathVariable Long userId) throws EmptyResultDataAccessException {
+        userRepository.delete(userId);
+        return HttpStatus.OK;
+    }
 
+
+    // Exception handlers
     @ExceptionHandler
     void handleUserNotFound(
             NotFoundException exception,
             HttpServletResponse response) throws IOException {
 
-        response.sendError(HttpStatus.NOT_FOUND.value());
+        response.sendError(HttpStatus.NOT_FOUND.value(), exception.getMessage());
     }
 
     @ExceptionHandler
