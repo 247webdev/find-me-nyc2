@@ -34,7 +34,6 @@ services:
         - ./users-api:/users-api
       depends_on:
         - eureka
-        - postgresdev
       command: './gradlew bootRun'
       environment:
         - GRADLE_USER_HOME=cache
@@ -48,7 +47,6 @@ services:
           - ./results-api:/results-api
         depends_on:
           - eureka
-          - postgresdev
         command: './gradlew bootRun'
         environment:
           - GRADLE_USER_HOME=cache

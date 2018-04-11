@@ -72,6 +72,8 @@ task waitForResultsAPIs(type: Exec) {
 
 test {
     dependsOn cleanTest
+    dependsOn waitForUsersAPIs
+    dependsOn waitForResultsAPIs
 //    dependsOn waitForAPIs
 
     testLogging {
@@ -108,7 +110,7 @@ task allTests(type: Test) {
 }
 
 //allTests.finalizedBy(stopUIDevServer)
-//allTests.finalizedBy(composeDown)
+allTests.finalizedBy(composeDown)
 
 dockerCompose {
     useComposeFiles = ['docker-compose.yml']
