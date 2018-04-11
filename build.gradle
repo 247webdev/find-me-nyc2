@@ -76,7 +76,7 @@ test {
 
     testLogging {
         exceptionFormat "full"
-        events "skipped", "passed", "failed"
+        events "skipped", "passed",  "failed"
         displayGranularity 2
     }
 }
