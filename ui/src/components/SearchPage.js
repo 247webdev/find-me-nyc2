@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import ResultList from './ResultList'
 import Navbar from './Navbar'
+import MapBox from './MapBox'
     
 class SearchPage extends Component {
 	state = {
@@ -76,6 +77,7 @@ class SearchPage extends Component {
 		      	this.state.submitted ?
 		      	<ResultList results={this.props.results} /> : null
 		      }
+		      <MapBox />
 	    	</div>
 	    </div>
 	  )
