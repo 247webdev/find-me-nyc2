@@ -10,7 +10,20 @@ const mapCenter = [40.701835, -73.941262];
 const zoomLevel = 10;
 
 class MapBox extends Component {
-
+	state = {
+		results: [
+			{
+				title: "address1",
+				lat: 40.701835,
+	    	lng: -73.941262
+			},
+			{
+				title: "address2",
+				lat: 41.701835,
+	    	lng: -72.941262
+			} 
+  	]
+	}
   render() {
   	// const image = L.Icon({
    //     iconUrl: "http://gkv.com/wp-content/uploads/leaflet-maps-marker-icons/map_marker-red-small.png",
@@ -30,7 +43,7 @@ class MapBox extends Component {
           <TileLayer
               attribution={stamenTonerAttr}
               url={stamenTonerTiles} />
-          {this.props.results.map((result, index) => {
+          {this.state.results.map((result, index) => {
           	// <Marker key={result.index} position={[result.lat, result.lng]} icon={image} />
           	<MarkerComponent title={result.title} lat={result.lat} lng={result.lng} index={index} />
           	console.log('hello')
