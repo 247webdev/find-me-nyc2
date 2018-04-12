@@ -91,7 +91,7 @@ class App extends Component {
 
     axios.get(`${process.env.REACT_APP_USERS_API}/results`)
       .then((response) => {
-        this.setState({results:response.data})
+        this.setState({results:response.data.slice(0, 50)})
       })
       
   }

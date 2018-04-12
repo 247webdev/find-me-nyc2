@@ -8,7 +8,7 @@ const ResultList = (props) => {
     <div id='result-list'>
       <h1>Results</h1>
       {
-        props.results.slice(0, 20).map((result, index) => {
+        props.results.map((result, index) => {
           return (
 
             <Result
