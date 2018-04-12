@@ -25,29 +25,21 @@ class MapBox extends Component {
   	]
 	}
   render() {
-  	// const image = L.Icon({
-   //     iconUrl: "http://gkv.com/wp-content/uploads/leaflet-maps-marker-icons/map_marker-red-small.png",
-   //     // shadowUrl: require('../public/marker-shadow.png'),
-   //     iconSize:     [38, 95], // size of the icon
-   //     shadowSize:   [50, 64], // size of the shadow
-   //     iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-   //     shadowAnchor: [4, 62],  // the same for the shadow
-   //     popupAnchor:  [-3, -76]// point from which the popup should open relative to the iconAnchor
-   // })
   	
     return (
       <div>
-        <Map
-          center={mapCenter}
-          zoom={zoomLevel}>
-          <TileLayer
-              attribution={stamenTonerAttr}
-              url={stamenTonerTiles} />
-          {this.state.results.map((result, index) => {
-          	// <Marker key={result.index} position={[result.lat, result.lng]} icon={image} />
-          	<MarkerComponent title={result.title} lat={result.lat} lng={result.lng} index={index} />
-          	console.log('hello')
-          })}
+        <Map center={mapCenter} zoom={zoomLevel}>
+
+          <TileLayer attribution={stamenTonerAttr} url={stamenTonerTiles} />
+
+	        {this.state.results.map((result, index) => 
+	        	// <MarkerComponent index={index} lat={result.lat} lng={result.lng} title={result.title} />
+	          <Marker key={index} position={[result.lat, result.lng]}>
+		          <Popup>
+		            <span>{result.title}</span>
+		          </Popup>
+		        </Marker>
+	        )}
           
         </Map>
       </div>

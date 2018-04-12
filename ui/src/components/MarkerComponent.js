@@ -18,7 +18,7 @@ const MarkerComponent = (props) => {
 
   return (
   	<div>
-	    <Marker key={props.index} position={position} icon={image}>
+	    <Marker key={props.index} position={position}>
 	    	<Popup>
 	        <span>
 	          {props.title}
