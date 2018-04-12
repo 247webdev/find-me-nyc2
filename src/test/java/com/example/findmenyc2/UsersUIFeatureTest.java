@@ -169,8 +169,7 @@ public class UsersUIFeatureTest {
         $("#search-submit").click();
 
         $("#result-list").should(appear);
-        $("#result-item").should(appear);
 
-        $$("[data-result-display]").shouldHave(size(20));
+        $$("[data-result-display]").shouldHave(size(50));
     }
 }

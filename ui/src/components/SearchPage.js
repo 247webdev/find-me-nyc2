@@ -75,9 +75,10 @@ class SearchPage extends Component {
 		      </div>
 		      {
 		      	this.state.submitted ?
-		      	<ResultList results={this.props.results} /> : null
+		      	<ResultList results={this.props.results} />
+		      	<div id="map-box"><MapBox results={this.props.results} /></div> : null
 		      }
-		      <div id="map-box"><MapBox results={this.props.results} /></div>
+		      
 	    	</div>
 	    </div>
 	  )
