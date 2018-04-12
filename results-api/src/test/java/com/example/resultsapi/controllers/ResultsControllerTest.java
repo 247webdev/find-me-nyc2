@@ -1,5 +1,6 @@
 package com.example.resultsapi.controllers;
 
+import com.example.resultsapi.factories.ResultFactory;
 import com.example.resultsapi.models.Result;
 import com.example.resultsapi.repositories.ResultRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,6 +41,9 @@ public class ResultsControllerTest {
 
     @MockBean
     private ResultRepository mockResultRepository;
+
+    @MockBean
+    private ResultFactory mockResultFactory;
 
     private Result newResult;
     private Result updatedSecondResult;
@@ -93,6 +97,7 @@ public class ResultsControllerTest {
         given(mockResultRepository.findOne(1L)).willReturn(firstResult);
         given(mockResultRepository.findOne(4L)).willReturn(null);
         given(mockResultRepository.save(newResult)).willReturn(newResult);
+        given(mockResultFactory.addLatitudeAndLongitudeToResult(newResult)).willReturn(newResult);
         given(mockResultRepository.save(updatedSecondResult)).willReturn(updatedSecondResult);
 
         // Mock out Delete to return EmptyResultDataAccessException for missing user with ID of 4
@@ -122,7 +127,7 @@ public class ResultsControllerTest {
 
         this.mockMvc
                 .perform(get("/"))
-                .andExpect(jsonPath("$[0].title", is("result title 1")));
+                .andExpect(jsonPath("$[0].short_title", is("result title 1")));
     }
 
     @Test
@@ -130,7 +135,7 @@ public class ResultsControllerTest {
 
         this.mockMvc
                 .perform(get("/"))
-                .andExpect(jsonPath("$[0].location", is("111 11th ave, san francisco ca")));
+                .andExpect(jsonPath("$[0].address", is("111 11th ave, san francisco ca")));
     }
 
     @Test
@@ -154,7 +159,7 @@ public class ResultsControllerTest {
 
         this.mockMvc
                 .perform(get("/"))
-                .andExpect(jsonPath("$[0].section", is("public hearings 2")));
+                .andExpect(jsonPath("$[0].section_name", is("public hearings 2")));
     }
 
     @Test
@@ -162,7 +167,7 @@ public class ResultsControllerTest {
 
         this.mockMvc
                 .perform(get("/"))
-                .andExpect(jsonPath("$[0].description", is("public hearings description here 1")));
+                .andExpect(jsonPath("$[0].type_of_notice_description", is("public hearings description here 1")));
     }
 
     @Test
@@ -170,7 +175,7 @@ public class ResultsControllerTest {
 
         this.mockMvc
                 .perform(get("/"))
-                .andExpect(jsonPath("$[0].dateAndTime", is("date and time goes here 1")));
+                .andExpect(jsonPath("$[0].event_date", is("date and time goes here 1")));
     }
 
     @Test
@@ -186,7 +191,7 @@ public class ResultsControllerTest {
 
         this.mockMvc
                 .perform(get("/1"))
-                .andExpect(jsonPath("$.title", is("result title 1")));
+                .andExpect(jsonPath("$.short_title", is("result title 1")));
     }
 
     @Test
@@ -194,7 +199,7 @@ public class ResultsControllerTest {
 
         this.mockMvc
                 .perform(get("/1"))
-                .andExpect(jsonPath("$.location", is("111 11th ave, san francisco ca")));
+                .andExpect(jsonPath("$.address", is("111 11th ave, san francisco ca")));
     }
 
     @Test
@@ -218,7 +223,7 @@ public class ResultsControllerTest {
 
         this.mockMvc
                 .perform(get("/1"))
-                .andExpect(jsonPath("$.section", is("public hearings 2")));
+                .andExpect(jsonPath("$.section_name", is("public hearings 2")));
     }
 
     @Test
@@ -226,7 +231,7 @@ public class ResultsControllerTest {
 
         this.mockMvc
                 .perform(get("/1"))
-                .andExpect(jsonPath("$.description", is("public hearings description here 1")));
+                .andExpect(jsonPath("$.type_of_notice_description", is("public hearings description here 1")));
     }
 
     @Test
@@ -234,7 +239,7 @@ public class ResultsControllerTest {
 
         this.mockMvc
                 .perform(get("/1"))
-                .andExpect(jsonPath("$.dateAndTime", is("date and time goes here 1")));
+                .andExpect(jsonPath("$.event_date", is("date and time goes here 1")));
     }
 
     @Test
@@ -298,7 +303,7 @@ public class ResultsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(newResult))
                 )
-                .andExpect(jsonPath("$.title", is("new result title")));
+                .andExpect(jsonPath("$.short_title", is("new result title")));
     }
 
     @Test
@@ -310,7 +315,7 @@ public class ResultsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(newResult))
                 )
-                .andExpect(jsonPath("$.location", is("new address")));
+                .andExpect(jsonPath("$.address", is("new address")));
     }
 
     @Test
@@ -346,7 +351,7 @@ public class ResultsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(newResult))
                 )
-                .andExpect(jsonPath("$.section", is("new section")));
+                .andExpect(jsonPath("$.section_name", is("new section")));
     }
 
     @Test
@@ -358,7 +363,7 @@ public class ResultsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(newResult))
                 )
-                .andExpect(jsonPath("$.description", is("new description")));
+                .andExpect(jsonPath("$.type_of_notice_description", is("new description")));
     }
 
     @Test
@@ -370,7 +375,7 @@ public class ResultsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(newResult))
                 )
-                .andExpect(jsonPath("$.dateAndTime", is("new date and time")));
+                .andExpect(jsonPath("$.event_date", is("new date and time")));
     }
 
     @Test
@@ -394,7 +399,7 @@ public class ResultsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(updatedSecondResult))
                 )
-                .andExpect(jsonPath("$.title", is("updated result title")));
+                .andExpect(jsonPath("$.short_title", is("updated result title")));
     }
 
     @Test
@@ -406,7 +411,7 @@ public class ResultsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(updatedSecondResult))
                 )
-                .andExpect(jsonPath("$.location", is("updated address")));
+                .andExpect(jsonPath("$.address", is("updated address")));
     }
 
     @Test
@@ -442,7 +447,7 @@ public class ResultsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(updatedSecondResult))
                 )
-                .andExpect(jsonPath("$.section", is("updated section")));
+                .andExpect(jsonPath("$.section_name", is("updated section")));
     }
 
     @Test
@@ -454,7 +459,7 @@ public class ResultsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(updatedSecondResult))
                 )
-                .andExpect(jsonPath("$.description", is("updated description")));
+                .andExpect(jsonPath("$.type_of_notice_description", is("updated description")));
     }
 
     @Test
@@ -466,7 +471,7 @@ public class ResultsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(updatedSecondResult))
                 )
-                .andExpect(jsonPath("$.dateAndTime", is("updated date and time")));
+                .andExpect(jsonPath("$.event_date", is("updated date and time")));
     }
 
     @Test
