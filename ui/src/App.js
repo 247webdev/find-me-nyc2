@@ -69,16 +69,30 @@ class App extends Component {
     this.setState({searchInput})
     axios.get(`https://data.cityofnewyork.us/resource/buex-bi6w.json?section_name=Public%20Hearings%20and%20Meetings`)
       .then((response) => {
-        console.log(response.data)
-        this.setState({results: response.data})
+        response.data.map((result) => {
+          if(result.state) {
+            let address = `${result.street_address_1} ${result.street_address_2}, ${result.city}, ${result.state}, ${result.zip_code}`
+            result['address'] = address
+
+            axios.post(`${process.env.REACT_APP_USERS_API}/results`, result)
+
+            var newArray = this.state.results.slice();    
+            newArray.push(result)   
+            this.setState({results:newArray})
+          }
+        })
+
+        
       })
       .catch((error) => {
           console.log('Error retrieving users!')
           console.log(error)
       })
+      
   }
 
   componentDidMount() {
+    console.log('errooo')
     axios.get(`${process.env.REACT_APP_USERS_API}/users`)
       .then((response) => {
         console.log(response)
