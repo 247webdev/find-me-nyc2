@@ -59,7 +59,7 @@ public class ResultFactoryTest {
     }
 
     @Test
-    public void updateResultById_success_returnsUpdatedLat() throws Exception {
+    public void setLatForResult_success_returnsUpdatedResult() throws Exception {
 
 //        this.mockMvc
 //                .perform(
