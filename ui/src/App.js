@@ -78,7 +78,7 @@ class App extends Component {
 
             var newArray = this.state.results.slice();    
             newArray.push(result)   
-            this.setState({results:newArray})
+            
           }
         })
 
@@ -87,6 +87,11 @@ class App extends Component {
       .catch((error) => {
           console.log('Error retrieving users!')
           console.log(error)
+      })
+
+    axios.get(`${process.env.REACT_APP_USERS_API}/results`)
+      .then((response) => {
+        this.setState({results:response.data})
       })
       
   }

@@ -3,10 +3,6 @@ package com.example.resultsapi.controllers;
 import com.example.resultsapi.models.Result;
 import com.example.resultsapi.repositories.ResultRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.code.geocoder.Geocoder;
-import com.google.code.geocoder.GeocoderRequestBuilder;
-import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -485,12 +481,4 @@ public class ResultsControllerTest {
                 .andExpect(status().reason(containsString("Result with ID of 4 was not found!")));
     }
 
-    @Test
-    public void testing() throws Exception {
-        final Geocoder geocoder = new Geocoder();
-        GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress("383 Madison Avenue, New York, NY 10017").setLanguage("en").getGeocoderRequest();
-        GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
-        System.out.println(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat());
-        System.out.println(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng());
-    }
 }

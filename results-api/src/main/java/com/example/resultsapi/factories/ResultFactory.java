@@ -5,9 +5,9 @@ import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
+import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
+@Component
 public class ResultFactory {
 
     public Result addLatitudeAndLongitudeToResult(Result rawResult) {
