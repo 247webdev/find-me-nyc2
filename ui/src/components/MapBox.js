@@ -3,9 +3,6 @@ import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet'
 import moment from 'moment'
 
-// import markerIcon from '../images/marker-icon.png'
-// import shadowIcon from '../images/marker-shadow.png'
-
 const stamenTonerTiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const stamenTonerAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 const mapCenter = [40.701835, -73.941262];
@@ -33,7 +30,7 @@ const MapBox = (props) => {
 	          <Popup>
 	            <span><p><b>{result.short_title}</b></p>
 	            <p>{result.address}</p>
-	            <p>{result.event_date}</p></span>
+	            <p>{moment(result.event_date, "YYYY-MM-DD hh:mm").toString()}</p></span>
 	          </Popup>
 	        </Marker>
         )}
