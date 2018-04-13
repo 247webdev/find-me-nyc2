@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import ResultList from './ResultList'
 import Navbar from './Navbar'
 import Footer from './Footer'
-import MapBox from './MapBox'
     
 class SearchPage extends Component {
 	state = {

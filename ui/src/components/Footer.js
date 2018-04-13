@@ -21,11 +21,6 @@ const Footer = () => {
     alignItems: "center"
   }
 
-  const logoStyles = {
-  	margin: "0",
-    height: "50px"
-  }
-
   const linkItemStyles = {
   	marginLeft: "10px",
   	textDecoration: "none",
