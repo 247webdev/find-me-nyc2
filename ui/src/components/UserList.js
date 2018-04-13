@@ -2,6 +2,7 @@ import React from 'react'
 
 import User from './User'
 import Navbar from './Navbar'
+import Footer from './Footer'
     
 const UserPage = (props) => {
 	const usersContainerStyles = {
@@ -46,6 +47,7 @@ const UserPage = (props) => {
 		      }
     		</div>
     	</div>
+    	<Footer />
     </div>
   )
 }

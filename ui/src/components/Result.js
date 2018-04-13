@@ -6,7 +6,7 @@ const Result = (props) => {
 	const resultItemStyle = {
 		textAlign: "right",
 		marginBottom: "50px",
-		color: "gray"
+		color: "grayn"
 	}
 
 	const time = moment(props.result.event_date, "YYYY-MM-DD HH:mm Z")
