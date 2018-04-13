@@ -31,7 +31,7 @@ const Footer = () => {
     <div id='footer' style={wrapperStyles}>
       <div style={footerContainerStyles}>
         <p>All Rights Reserved</p>
-      	<Link style={linkItemStyles} to="http://belcortes.com">made by belcortes.com</Link>
+      	<Link style={linkItemStyles} to="http://belcortes.com" target="_blank">made by belcortes.com</Link>
       </div>
     </div>
   )
