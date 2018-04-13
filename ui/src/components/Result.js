@@ -1,11 +1,15 @@
 import React from 'react'
+import moment from 'moment'
     
 const Result = (props) => {
 
 	const resultItemStyle = {
 		textAlign: "right",
-		marginBottom: "50px"
+		marginBottom: "50px",
+		color: "gray"
 	}
+
+	const time = moment(props.result.event_date, "YYYY-MM-DD HH:mm Z")
 
   return (
     <div id="result-item" style={resultItemStyle} data-result-display>

@@ -36,6 +36,13 @@ class User extends Component {
       marginTop: "0"
     }
 
+    const buttonStyle = {
+      border: "none",
+      background: "#e46766",
+      padding: "10px",
+      color: "white"
+    }
+
     return (
 
       <div style={usersItemStyles}>
@@ -79,9 +86,10 @@ class User extends Component {
           
           <button
             id={`delete-user-${this.props.user.id}`}
+            style={buttonStyle}
             onClick={() => this.props.deleteUser(this.props.user.id, this.props.index)}>
 
-            Delete
+            delete
           </button>
         </div>
       </div>

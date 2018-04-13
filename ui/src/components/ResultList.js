@@ -12,7 +12,7 @@ const ResultList = (props) => {
 
   const resultListStyle = {
     padding: "0 100px",
-    height: "400px",
+    height: "350px",
     overflowY: "scroll"
   }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet'
+import moment from 'moment'
 
 // import markerIcon from '../images/marker-icon.png'
 // import shadowIcon from '../images/marker-shadow.png'
@@ -8,7 +9,7 @@ import L from 'leaflet'
 const stamenTonerTiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const stamenTonerAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 const mapCenter = [40.701835, -73.941262];
-const zoomLevel = 11;
+const zoomLevel = 12;
 
 const MapBox = (props) => {
 
@@ -30,7 +31,9 @@ const MapBox = (props) => {
         {props.results.map((result, index) => 
           <Marker key={index} position={[result.lat, result.lng]} icon={myIcon}>
 	          <Popup>
-	            <span>{result.short_title}</span>
+	            <span><p><b>{result.short_title}</b></p>
+	            <p>{result.address}</p>
+	            <p>{result.event_date}</p></span>
 	          </Popup>
 	        </Marker>
         )}
