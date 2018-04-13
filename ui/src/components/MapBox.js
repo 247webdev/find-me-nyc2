@@ -8,7 +8,7 @@ import L from 'leaflet'
 const stamenTonerTiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const stamenTonerAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 const mapCenter = [40.701835, -73.941262];
-const zoomLevel = 10;
+const zoomLevel = 11;
 
 const MapBox = (props) => {
 

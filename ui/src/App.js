@@ -69,7 +69,7 @@ class App extends Component {
     this.setState({searchInput})
     axios.get(`https://data.cityofnewyork.us/resource/buex-bi6w.json?section_name=Public%20Hearings%20and%20Meetings`)
       .then((response) => {
-        response.data.map((result) => {
+        response.data.slice(0, 50).map((result) => {
           if(result.state) {
             let address = `${result.street_address_1} ${result.street_address_2}, ${result.city}, ${result.state}, ${result.zip_code}`
             result['address'] = address
@@ -91,7 +91,7 @@ class App extends Component {
 
     axios.get(`${process.env.REACT_APP_USERS_API}/results`)
       .then((response) => {
-        this.setState({results:response.data.slice(0, 50)})
+        this.setState({results:response.data.slice(0, 200)})
       })
       
   }

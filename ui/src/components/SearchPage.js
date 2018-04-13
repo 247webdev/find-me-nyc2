@@ -26,8 +26,7 @@ class SearchPage extends Component {
 			width: "80%",
     	margin:" 0 auto",
     	textAlign: "center",
-    	fontFamily: "avenir",
-    	marginTop: "50px"
+    	fontFamily: "avenir"
 		}
 
 		const blurbStyles = {
@@ -77,7 +76,7 @@ class SearchPage extends Component {
 		      	this.state.submitted ?
 		      	<ResultList results={this.props.results} /> : null
 		      }
-		      <div id="map-box"><MapBox results={this.props.results} /></div>
+		      
 	    	</div>
 	    </div>
 	  )
